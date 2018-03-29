@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+    <title>Reaction Test</title>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<style media="screen">
+
+  body{
+    font-family: Verdana, Geneva, sans-serif;
+  }
+
+  #box{
+    background: red;
+    width:200px;
+    height: 200px;
+    display: none;
+    position: relative;
+  }
+</style>
+
+</head>
+
+<body>
+  <h1>How quickly can you click on appearing figures?</h1>
+
+
+  <p>Your reaction time: <span id="time">(not attempted yet)</span></p>
+   <div id="box"></div>
+
+
+
+  <script type="text/javascript">
+
+      var createdTime; var clickedTime; var reactionTime;
+
+      function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
+      function makeBox(){
+
+        var timeout = Math.random()*5001;
+        document.getElementById("box").style.background = getRandomColor();
+        var top = Math.random()*300;
+        var left = Math.random()*500;
+        document.getElementById("box").style.marginTop = top + 'px';
+        document.getElementById("box").style.marginLeft = left+'px';
+        if(Math.random() < 0.5){
+          document.getElementById("box").style.borderRadius = "100px";
+        }else{
+          document.getElementById("box").style.borderRadius = "0";
+        }
+        setTimeout(function(){
+          document.getElementById("box").style.display = "block";
+          createdTime=Date.now();
+        }, timeout);
+      }
+
+
+      document.getElementById("box").onclick=function(){
+        clickedTime=Date.now();
+        document.getElementById("time").innerHTML = (clickedTime-createdTime)/1000 +"s";
+        this.style.display = "none";
+        makeBox();
+
+      }
+
+      makeBox();
+
+
+
+  </script>
+</body>
+</html>
